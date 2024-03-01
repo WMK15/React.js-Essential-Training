@@ -2,6 +2,8 @@
 <html>
   <head>
     <meta charset="UTF-8" />
+
+    <!-- Load React. -->
     <script
       src="https://unpkg.com/react@16/umd/react.development.js"
       crossorigin
@@ -10,20 +12,91 @@
       src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"
       crossorigin
     ></script>
-    <title>REACT</title>
+
+    <!-- Load Babel Compiler-->
+    <script
+      src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"
+      crossorigin
+    ></script>
+
+    <title>React.js Essential Training</title>
   </head>
   <body>
     <div id="root"></div>
 
-    <script type="text/javascript">
-      let ul = React.createElement(
-        "ul",
-        { style: { color: "blue" } },
-        React.createElement("li", null, "save"),
-        React.createElement("li", null, "me"),
-        React.createElement("li", null, "JSX")
+    <!-- Instead of using text/javascript, we use text/babel for JSX-->
+    <!-- This is not the most optimised way to use babel -->
+    <script type="text/babel">
+      let robot = "Robot";
+      let cowboy = "Cowboy";
+      let moon = "Moon";
+      let name = "React";
+
+      function Header(props) {
+        console.log(props);
+        return (
+          <header>
+            <h1>Hello, may name is {props.name}</h1>
+          </header>
+        );
+      }
+
+      function Main({ job, lang }) {
+        return (
+          <section>
+            <p>I am a {job} developer.</p>
+            <img
+              height={200}
+              alt="computer with code and a pair of glasses in front of it."
+              src="./naturenetwork.png"
+            />
+            <ul>
+              {
+                /* It is better practice to use objects, instead of using
+                indexing for keys, because the objects make the data stable.*/
+                lang.map((language) => (
+                  <li key={language.id}>{language.name}</li>
+                ))
+              }
+            </ul>
+          </section>
+        );
+      }
+
+      function Footer({ year }) {
+        return (
+          <footer>
+            <p>Copyright {year}</p>
+          </footer>
+        );
+      }
+
+      const languages = ["JS", "Python", "Ruby", "Java", "C++", "C#"];
+      const langObjects = languages.map((language, i) => ({
+        id: i,
+        name: language,
+      }));
+
+      function App() {
+        return (
+          <React.Fragment>
+            <Header name={"Waseef"} />
+            <Main job={"React"} lang={langObjects} />
+            <Footer year={new Date().getFullYear()} />
+          </React.Fragment>
+        );
+      }
+
+      ReactDOM.render(
+        // <ul>
+        //   <li>{robot}</li>
+        //   <li>{cowboy}</li>
+        //   <li>{moon.length}</li>
+        //   <li>{name.toUpperCase()}</li>
+        // </ul>
+        <App />,
+        document.getElementById("root")
       );
-      ReactDOM.render(ul, document.getElementById("root"));
     </script>
   </body>
 </html>
